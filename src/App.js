@@ -13,6 +13,27 @@ const App = () => {
     };
   };
 
+  //with leading and trailin options
+  const debounce2 = (func, delay, options = { leading: false, trailing: true }) => {
+    let timer;
+  
+    return function (...args) {
+      clearTimeout(timer);
+  
+      if (options.leading && !timer) {
+        func(args);
+      }
+  
+      timer = setTimeout(() => {
+        if (options.trailing) {
+        func(args);
+        }
+        timer = null;
+      }, delay);
+    };
+  };
+  
+
   const handleChange = (value) => {
     fetch(`https://demo.dataverse.org/api/search?q=${value}`)
       .then((res) => res.json())
